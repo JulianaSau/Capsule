@@ -1,8 +1,8 @@
 {
-  "name": "Capsule",
+  "name": "server",
   "version": "1.0.0",
   "description": "A NodeJS server to serve frontend",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/JulianaSau/Capsule",
   "license": "MIT",
   "dependencies": {
