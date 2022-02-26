@@ -4,7 +4,11 @@
   "description": "A NodeJS server to serve frontend",
   "main": "server.js",
   "repository": "https://github.com/JulianaSau/Capsule",
-  "license": "MIT",
+  "license": "ICS",
+  "scripts":{
+    "start" : "nodemon server.js"
+  },
+
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
