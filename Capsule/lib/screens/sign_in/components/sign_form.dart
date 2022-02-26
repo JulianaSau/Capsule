@@ -1,13 +1,19 @@
+import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/helper/keyboard.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/login_success/login_success_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
+
+const SERVER_IP = "http://192.168.0.12:3000";
 
 class SignForm extends StatefulWidget {
   @override
@@ -15,6 +21,7 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  final FlutterSecureStorage storage = FlutterSecureStorage();
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
@@ -33,6 +40,27 @@ class _SignFormState extends State<SignForm> {
       setState(() {
         errors.remove(error);
       });
+  }
+
+  Future loginUser(String email, String password) async {
+    final response = await http.post(Uri.parse('$SERVER_IP/api/user/login'),
+        headers: <String, String>{
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "email": email,
+          "password": password,
+        }));
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response, then parse the JSON.
+      return jsonDecode(response.body);
+    } else {
+      print(response.statusCode);
+      print(response.body);
+      // If the server did not return a 200 OK response, then throw an exception.
+      throw Exception('Failed to load data');
+    }
   }
 
   @override
@@ -76,6 +104,8 @@ class _SignFormState extends State<SignForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
+                var response = loginUser(email!, password!);
+                print(response);
                 KeyboardUtil.hideKeyboard(context);
                 Navigator.pushNamed(context, LoginSuccessScreen.routeName);
               }

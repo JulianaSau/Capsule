@@ -5,9 +5,19 @@ const User = require("../models/userModel");
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, profile_pic } = req.body;
 
-  if (!name || !email || !password) {
+  if (!email) {
     res.status(400);
-    throw new Error("Please fill all the fields");
+    throw new Error("Please enter your name");
+  }
+
+  if (!name) {
+    res.status(400);
+    throw new Error("Please enter your email");
+  }
+
+  if (!password) {
+    res.status(400);
+    throw new Error("Please enter your password");
   }
 
   const userExists = await User.findOne({ email });
