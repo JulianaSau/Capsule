@@ -118,7 +118,7 @@ const updateProduct = asyncHandler(async (req, res, next) => {
       );
       if (willBeUpdated) {
         return res.status(201).json({
-          message: "Task updated",
+          message: "Product updated",
         });
       } else {
         return res.status(400).json({

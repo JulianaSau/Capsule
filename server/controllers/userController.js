@@ -69,18 +69,29 @@ const authUser = asyncHandler(async (req, res) => {
 
 // /api/user?search=janedoe
 const allUsers = asyncHandler(async (req, res) => {
-  const keyword = req.query.search
-    ? {
-        $or: [
-          { name: { $regex: req.query.search, $options: "i" } },
-          { email: { $regex: req.query.search, $options: "i" } },
-        ],
-      }
-    : {};
+  try {
+    if (req.query.search) {
+      const keyword = req.query.search
+        ? {
+            $or: [
+              { name: { $regex: req.query.search, $options: "i" } },
+              { email: { $regex: req.query.search, $options: "i" } },
+            ],
+          }
+        : {};
 
-  const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-  res.send(users);
-  // console.log(keyword);
+      const users = await User.find(keyword).find({
+        _id: { $ne: req.user._id },
+      });
+      res.send(users);
+    }
+
+    const users = await User.find({}, {}, { lean: true });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(400);
+    throw new Error(`${error}`);
+  }
 });
 
 module.exports = { registerUser, authUser, allUsers };

@@ -5,10 +5,9 @@
   "main": "server.js",
   "repository": "https://github.com/JulianaSau/Capsule",
   "license": "ICS",
-  "scripts":{
-    "start" : "nodemon server.js"
+  "scripts": {
+    "start": "nodemon server.js"
   },
-
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -16,8 +15,10 @@
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "express-async-handler": "^1.2.0",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.3",
+    "multer": "^1.4.4",
     "nodemon": "^2.0.15"
   }
 }
