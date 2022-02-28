@@ -27,13 +27,13 @@ class SpecialOffers extends StatelessWidget {
             children: [
               SpecialOfferCard(
                 image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
+                category: "Personal Protective Equipment",
                 numOfBrands: 18,
                 press: () {},
               ),
               SpecialOfferCard(
                 image: "assets/images/Image Banner 3.png",
-                category: "Fashion",
+                category: "Health and Wellness",
                 numOfBrands: 24,
                 press: () {},
               ),

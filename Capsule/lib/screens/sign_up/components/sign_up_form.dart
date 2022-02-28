@@ -10,7 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-const SERVER_IP = "http://192.168.0.12:3000";
+const SERVER_IP = "http://10.0.2.2:3000";
 
 class SignUpForm extends StatefulWidget {
   SignUpForm({Key? key}) : super(key: key);
@@ -84,10 +84,20 @@ class _SignUpFormState extends State<SignUpForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                var response = await registerUser(name!, email!, password!);
-                print(response);
-                // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                await registerUser(name!, email!, password!)
+                    .then((response) => {
+                          if (response != null)
+                            {
+                              storage.write(key: 'email', value: email),
+                              storage.write(key: 'password', value: password),
+                              print(response),
+                              // if all are valid then go to success screen
+                              Navigator.pushNamed(
+                                  context, CompleteProfileScreen.routeName)
+                            }
+                          else
+                            {print("error")},
+                        });
               }
             },
           ),

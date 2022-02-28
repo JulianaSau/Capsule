@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Product {
-  late int id;
+  late String id;
   late String title, description, category;
-  late List<String> images;
-  late List<Color> colors;
+  late List<dynamic> images;
+  late List<dynamic> colors;
   late double rating, price;
   late bool isFavourite, isPopular;
   late int number_in_stock;
@@ -23,9 +23,9 @@ class Product {
     required this.category,
   });
 
-  Product.fromJson(Map<String, dynamic> json) {
+  Product.fromJson(Map json) {
     title = json["title"];
-    id = json["id"];
+    id = json["_id"];
     category = json["category"];
     description = json["description"];
     rating = json["rating"];
@@ -60,7 +60,7 @@ class Product {
 
 List<Product> demoProducts = [
   Product(
-    id: 1,
+    id: "1",
     images: [
       "assets/images/ps4_console_white_1.png",
       "assets/images/ps4_console_white_2.png",
@@ -83,7 +83,7 @@ List<Product> demoProducts = [
     category: "Personal Protective Equipment",
   ),
   Product(
-    id: 2,
+    id: "2",
     images: [
       "assets/images/Image Popular Product 2.png",
     ],
@@ -102,7 +102,7 @@ List<Product> demoProducts = [
     category: "Personal Protective Equipment",
   ),
   Product(
-    id: 3,
+    id: "3",
     images: [
       "assets/images/glap.png",
     ],
@@ -122,7 +122,7 @@ List<Product> demoProducts = [
     category: "Personal Protective Equipment",
   ),
   Product(
-    id: 4,
+    id: "4",
     images: [
       "assets/images/wireless headset.png",
     ],

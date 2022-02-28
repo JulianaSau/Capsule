@@ -1,6 +1,22 @@
+import 'package:flutter/cupertino.dart';
+
 import 'Product.dart';
 
-class Cart {
+class Cart with ChangeNotifier {
+  List<Product> products = [];
+
+  double get total {
+    return products.fold(0.0, (double currentTotal, Product nextProduct) {
+      return currentTotal + nextProduct.price;
+    });
+  }
+
+  void addToCart(Product product) => products.add(product);
+  void removeFromCart(Product product) {
+    products.remove(product);
+    notifyListeners();
+  }
+
   final Product product;
   final int numOfItem;
 

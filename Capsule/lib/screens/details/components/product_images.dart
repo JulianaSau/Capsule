@@ -21,14 +21,16 @@ class _ProductImagesState extends State<ProductImages> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      // padding: EdgeInsets.all(getProportionateScreenWidth(20)),
       children: [
         SizedBox(
-          width: getProportionateScreenWidth(238),
+          // width: getProportionateScreenWidth(238),
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
               tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[selectedImage]),
+              child: Image.network(widget.product.images[selectedImage],
+                  fit: BoxFit.fill),
             ),
           ),
         ),
@@ -62,8 +64,12 @@ class _ProductImagesState extends State<ProductImages> {
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
+          image: DecorationImage(
+            image: NetworkImage(widget.product.images[index]),
+            fit: BoxFit.fill,
+          ),
         ),
-        child: Image.asset(widget.product.images[index]),
+        child: Text(""),
       ),
     );
   }

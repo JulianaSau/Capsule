@@ -13,7 +13,7 @@ import '../../../components/default_button.dart';
 import '../../../constants.dart';
 import '../../../size_config.dart';
 
-const SERVER_IP = "http://192.168.0.12:3000";
+const SERVER_IP = "http://10.0.2.2:3000";
 
 class SignForm extends StatefulWidget {
   @override
@@ -100,11 +100,11 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                var response = loginUser(email!, password!);
+                var response = await loginUser(email!, password!);
                 print(response);
                 KeyboardUtil.hideKeyboard(context);
                 Navigator.pushNamed(context, LoginSuccessScreen.routeName);

@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shop_app/components/product_card.dart';
+import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
+import 'package:shop_app/enums.dart';
 import 'package:shop_app/models/Product.dart';
-import 'package:shop_app/screens/categories/categories_page.dart';
-
-import '../../../size_config.dart';
-import 'section_title.dart';
+import 'package:shop_app/screens/categories/components/product_card.dart';
 
 Future<List<Product>> fetchProducts() async {
   final response =
@@ -29,14 +27,15 @@ Future<List<Product>> fetchProducts() async {
   }
 }
 
-class PopularProducts extends StatefulWidget {
-  const PopularProducts({Key? key}) : super(key: key);
+class CategoriesScreen extends StatefulWidget {
+  static String routeName = "/categories";
+  const CategoriesScreen({Key? key}) : super(key: key);
 
   @override
-  _PopularProductsState createState() => _PopularProductsState();
+  _CategoriesScreenState createState() => _CategoriesScreenState();
 }
 
-class _PopularProductsState extends State<PopularProducts> {
+class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   void initState() {
     super.initState();
@@ -44,39 +43,38 @@ class _PopularProductsState extends State<PopularProducts> {
   }
 
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-          child: SectionTitle(
-            title: "Popular Products",
-            press: () =>
-                Navigator.pushNamed(context, CategoriesScreen.routeName),
-          ),
-        ),
-        SizedBox(height: getProportionateScreenWidth(20)),
-        Container(
-          height: 230.0,
+    return Scaffold(
+      appBar: buildAppBar(context),
+      body: Center(
           child: FutureBuilder<List<Product>>(
               future: fetchProducts(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   List<Product>? resData = snapshot.data;
                   return ListView.builder(
-                      scrollDirection: Axis.horizontal,
+                      padding: const EdgeInsets.all(8),
                       itemCount: resData != null ? resData.length : 0,
                       itemBuilder: (context, index) {
-                        if (resData![index].isPopular)
-                          return ProductCard(product: resData[index]);
-
-                        return SizedBox.shrink();
+                        return ProductCard(product: resData![index]);
                       });
                 }
                 return const CircularProgressIndicator();
-              }),
-        )
-      ],
+              })),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Row(
+        children: [
+          Text(
+            "Products",
+            style: TextStyle(color: Colors.black),
+          ),
+          Icon(Icons.search)
+        ],
+      ),
     );
   }
 }
