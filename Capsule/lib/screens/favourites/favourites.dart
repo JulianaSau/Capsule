@@ -6,6 +6,7 @@ import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/enums.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/categories/components/product_card.dart';
+import '../../size_config.dart';
 
 Future<List<Product>> fetchProducts() async {
   final response =
@@ -46,7 +47,10 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Center(
+      body: Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenWidth(20),
+              vertical: getProportionateScreenWidth(20)),
           child: FutureBuilder<List<Product>>(
               future: fetchProducts(),
               builder: (context, snapshot) {
@@ -76,7 +80,6 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
             "Favourites",
             style: TextStyle(color: Colors.black),
           ),
-          Icon(Icons.search)
         ],
       ),
     );

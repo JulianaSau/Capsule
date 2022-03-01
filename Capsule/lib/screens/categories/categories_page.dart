@@ -6,6 +6,7 @@ import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
 import 'package:shop_app/enums.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/screens/categories/components/product_card.dart';
+import 'package:shop_app/size_config.dart';
 
 Future<List<Product>> fetchProducts() async {
   final response =
@@ -45,21 +46,23 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(context),
-      body: Center(
-          child: FutureBuilder<List<Product>>(
-              future: fetchProducts(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  List<Product>? resData = snapshot.data;
-                  return ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemCount: resData != null ? resData.length : 0,
-                      itemBuilder: (context, index) {
-                        return ProductCard(product: resData![index]);
-                      });
-                }
-                return const CircularProgressIndicator();
-              })),
+      body: Padding(
+          padding: EdgeInsets.all(14.0),
+          child: Center(
+              child: FutureBuilder<List<Product>>(
+                  future: fetchProducts(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Product>? resData = snapshot.data;
+                      return ListView.builder(
+                          padding: const EdgeInsets.all(8),
+                          itemCount: resData != null ? resData.length : 0,
+                          itemBuilder: (context, index) {
+                            return ProductCard(product: resData![index]);
+                          });
+                    }
+                    return const CircularProgressIndicator();
+                  }))),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
@@ -72,7 +75,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             "Products",
             style: TextStyle(color: Colors.black),
           ),
-          Icon(Icons.search)
+          Padding(
+              padding: EdgeInsets.only(left: getProportionateScreenWidth(170)),
+              child: Icon(Icons.search))
         ],
       ),
     );

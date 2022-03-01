@@ -3,7 +3,7 @@ const Cart = require("../models/cart.model");
 exports.cart = async () => {
   const carts = await Cart.find().populate({
     path: "items.productId",
-    select: "title price total",
+    select: "title price total images",
   });
   return carts[0];
 };
