@@ -6,7 +6,8 @@
   "repository": "https://github.com/JulianaSau/Capsule",
   "license": "ICS",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
